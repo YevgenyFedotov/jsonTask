@@ -6,6 +6,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileReader;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -15,7 +16,9 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+import java.util.Properties;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class Ticket {
     private final String origin;
@@ -48,11 +51,27 @@ public class Ticket {
     //получаем контейнер из входящего JSON
     public static ArrayList<Ticket> getContainer(){
         ArrayList<Ticket> container = new ArrayList<>();
-        File file = new File("D:\\Yevheny\\jsonTask\\tickets.json");
+        Properties prop = new Properties();
+        String path = "";
+        try {
+            prop.load(new FileInputStream("config.properties"));
+
+            path = prop.getProperty("path");
+
+            // Используйте полученные значения
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
+
+        File file = new File(path);
         JSONParser parser = new JSONParser();
         try {
-            JSONObject root = (JSONObject) parser.parse(new FileReader(file));
+            FileInputStream fis = new FileInputStream(path);
+            InputStreamReader isr = new InputStreamReader(fis, StandardCharsets.UTF_8);
+
+            JSONObject root = (JSONObject) parser.parse(isr);
             JSONArray tickets = (JSONArray) root.get("tickets");
+
             for (Object ticket: tickets){
                 JSONObject oTicket = (JSONObject) ticket;
                 if(oTicket.get("origin_name").equals("Владивосток") && oTicket.get("destination_name").equals("Тель-Авив")){

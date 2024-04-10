@@ -15,7 +15,7 @@ public class Main {
         //преобразования в дату и обратно сделано для корректного отображения времени
         //было 8:5:0 стало 08:05:00 и т.д.
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm:ss");
-        System.out.println("Минимальное время полета между городами Владивосток и Тель-Авив для каждого авиаперевозчика:");
+        System.out.println("Minimum flight time between the cities of Vladivostok and Tel Aviv for each air carrier:");
         for(String carrier: carriers){
             Duration duration = minDurations.get(carrier);
             Date date = new Date();
