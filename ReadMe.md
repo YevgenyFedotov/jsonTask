@@ -8,6 +8,7 @@
 
 ## Запуск
 ### Прописать в properties путь к Json файлу
+path=D:\\Yevheny\\jsonTask\\tickets.json
 ### На Linux
 ```java -jar jsonTask.jar```
 ```powershell
